@@ -214,8 +214,8 @@ describe("normalizeAgentCommandReplyPayloads", () => {
       result: createResult(),
     });
 
-    // runtime.log must NOT be called with the full body
-    expect(runtime.log).not.toHaveBeenCalledWith(longBody);
+    // runtime.log must NOT be called at all — announce output routes through announceLog
+    expect(runtime.log).not.toHaveBeenCalled();
     // subsystem logger info should get metadata-only line
     expect(announceLogInfoSpy).toHaveBeenCalledTimes(1);
     expect(announceLogInfoSpy).toHaveBeenCalledWith(expect.stringContaining("delivery:"));

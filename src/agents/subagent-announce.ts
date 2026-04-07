@@ -594,14 +594,15 @@ export async function runSubagentAnnounceFlow(params: {
             expectsCompletionMessage,
           })
         : targetRequesterOrigin;
+    const truncatedTask = taskLabel.length > 80 ? `${taskLabel.slice(0, 80)}…` : taskLabel;
     log.info(
-      `announce delivery: type=${announceType} task=${taskLabel} status=${outcome.status} ` +
+      `announce delivery: type=${announceType} task=${truncatedTask} status=${outcome.status} ` +
         `child=${params.childSessionKey} requester=${targetRequesterSessionKey} ` +
         `announceId=${announceId}`,
     );
     log.debug(
-      `announce body: announceId=${announceId} findingsChars=${findings.length} ` +
-        `triggerMessageChars=${triggerMessage.length}`,
+      `announce body: announceId=${announceId} task=${taskLabel} ` +
+        `findingsChars=${findings.length} triggerMessageChars=${triggerMessage.length}`,
     );
 
     const directIdempotencyKey = buildAnnounceIdempotencyKey(announceId);
